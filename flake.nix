@@ -1,5 +1,5 @@
 {
-  description = "Pure and reproducible flake which builds Unsloth Studio from source, with an AMD/ROCm runtime bundled";
+  description = "Builds Unsloth Studio from source, with AMD (ROCm + Vulkan) inference bundled";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -21,13 +21,14 @@
   }: let
     system = "x86_64-linux";
 
-    # rocmSupport is read by torch, bitsandbytes, llama-cpp and friends through
-    # `config`, so setting it once here gives the whole closure an AMD backend
-    # instead of overriding each package separately.
     pkgs = import nixpkgs {
       inherit system;
       config = {
+        # Read by llama-cpp and the rest of the ROCm closure through `config`,
+        # so one setting here rather than an override per package.
         rocmSupport = true;
+        # Parts of the ROCm stack are redistributable-but-unfree. Without this
+        # a build that reaches one of them stops with a licence error.
         allowUnfree = true;
       };
     };
@@ -48,8 +49,8 @@
       // {
         inherit
           (unsloth-studio.passthru)
+          unsloth-studio-desktop
           unsloth-studio-frontend
-          unsloth-studio-backend
           unsloth-studio-llama-cpp
           ;
       };
