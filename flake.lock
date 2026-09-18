@@ -18,7 +18,24 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "unsloth-src": "unsloth-src"
+      }
+    },
+    "unsloth-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789726222,
+        "narHash": "sha256-qJKNvw64/R6ywC4XgP5R2y/cf+zkTQCCGz2INT92v6w=",
+        "owner": "unslothai",
+        "repo": "unsloth",
+        "rev": "93d4627e41469fbdc96f1627476ce8c9f7071a7d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "unslothai",
+        "repo": "unsloth",
+        "type": "github"
       }
     }
   },
