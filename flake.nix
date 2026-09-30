@@ -49,6 +49,7 @@
             desktop-file-utils
             zlib
             vulkan-loader
+            rocmPackages.rocminfo
           ];
 
         # Bundles the resulting executables in a FHS sandbox to accomodate for
@@ -101,7 +102,7 @@
           profile = ''
             export SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
             export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules:$GIO_EXTRA_MODULES"
-            export CC=${pkgs.gcc}
+            export CC="${pkgs.gcc}/bin/cc"
             export PATH="$UV_INSTALL_DIR''${PATH:+:$PATH}"
           '';
         };
