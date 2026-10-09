@@ -61,7 +61,7 @@
             bubblewrap
           ];
 
-        sandboxCompat = pkgs.callPackage ./nix/sandbox.nix {};
+        sandboxProfile = import ./nix/sandbox.nix {inherit pkgs;};
 
         # Bundles the resulting executables in a FHS sandbox to accomodate for
         # Unsloth's runtime dependency fetching
@@ -74,7 +74,7 @@
             }
             // attrs
             // {
-              profile = sandboxCompat.profile + (attrs.profile or "");
+              profile = sandboxProfile + (attrs.profile or "");
             });
       in rec {
         unsloth-frontend = pkgs.callPackage ./nix/frontend.nix {
