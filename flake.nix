@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixlib.url = "github:nix-util/nixlib";
 
     opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
 
@@ -11,28 +12,30 @@
   };
 
   outputs = {
-    self,
-    nixpkgs,
+    nixlib,
     unsloth-src,
-    opencode-sandbox,
     ...
-  }: let
+  } @ inputs: let
     systems = [
       "x86_64-linux"
       "aarch64-linux"
     ];
 
-    forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+    util = nixlib.util {inherit systems inputs;};
 
     # pyproject.toml reads the version from this attribute too.
     version = builtins.head (
       builtins.match ".*__version__ = \"([^\"]+)\".*" (builtins.readFile "${unsloth-src}/unsloth/_version.py")
     );
   in {
-    formatter = forAllSystems (pkgs: pkgs.alejandra);
+    formatter = util.forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    packages = forAllSystems (
-      pkgs: let
+    packages = util.forEachSystem (
+      {
+        pkgs,
+        opencode-sandbox,
+        ...
+      }: let
         inherit (pkgs) lib;
 
         # Runtime dependencies which unsloth or unsloth studio will not fetch
@@ -110,7 +113,7 @@
           '';
         };
 
-        sandbox = opencode-sandbox.packages.${pkgs.system}.sandbox.override {
+        sandbox = opencode-sandbox.packages.sandbox.override {
           opencode-sandbox = {
             git.remote.url = "https://github.com/Trantorian1/unsloth-flake.git";
             git.shutdown.pushOnExit = false;
@@ -132,16 +135,13 @@
       }
     );
 
-    apps = forAllSystems (
-      pkgs: let
-        inherit (pkgs) lib;
-        packages = self.packages.${pkgs.stdenv.hostPlatform.system};
-      in rec {
-        unsloth-desktop = {
-          type = "app";
-          program = lib.getExe packages.unsloth-desktop;
-          meta = packages.unsloth-desktop.meta;
-        };
+    apps = util.forEachSystem (
+      {
+        self,
+        libpkgs,
+        ...
+      }: rec {
+        unsloth-desktop = libpkgs.mkApp self.packages.unsloth-desktop;
 
         default = unsloth-desktop;
       }
