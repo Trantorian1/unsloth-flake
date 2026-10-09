@@ -25,11 +25,11 @@
     "unsloth-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1791381209,
-        "narHash": "sha256-4FEGDGeCb+kpW/EhNz/tBQFAewxQFkeiEqE9RgviEMo=",
+        "lastModified": 1791516690,
+        "narHash": "sha256-v0x6n1sG+l6re203w0NKhwkyiiCulmagwQNKLKN86PY=",
         "owner": "unslothai",
         "repo": "unsloth",
-        "rev": "2402838d790fd5f8b65e8c0c4b7eff0899699d21",
+        "rev": "cc9128134156cc51f94eeb76d3d19f80bddbc8a7",
         "type": "github"
       },
       "original": {
