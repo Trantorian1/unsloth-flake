@@ -56,7 +56,12 @@
             zlib
             vulkan-loader
             rocmPackages.rocminfo
+            # Studio's tool sandbox. On PATH so Studio does not report it
+            # missing; the bwrap it runs is pinned in ./nix/sandbox.nix.
+            bubblewrap
           ];
+
+        sandboxCompat = pkgs.callPackage ./nix/sandbox.nix {};
 
         # Bundles the resulting executables in a FHS sandbox to accomodate for
         # Unsloth's runtime dependency fetching
@@ -67,7 +72,10 @@
               runScript = lib.getExe package;
               meta = package.meta;
             }
-            // attrs);
+            // attrs
+            // {
+              profile = sandboxCompat.profile + (attrs.profile or "");
+            });
       in rec {
         unsloth-frontend = pkgs.callPackage ./nix/frontend.nix {
           inherit version unsloth-src;
