@@ -22,6 +22,21 @@
         "type": "github"
       }
     },
+    "nixlib": {
+      "locked": {
+        "lastModified": 1791544737,
+        "narHash": "sha256-9B7QDso7MU26oFr68H5h9JvI63crgCrluVcpsYdltsI=",
+        "owner": "nix-util",
+        "repo": "nixlib",
+        "rev": "8e40e4429dfe7c4b29159a8e669fc46e99829229",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-util",
+        "repo": "nixlib",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1789546076,
@@ -75,6 +90,7 @@
     },
     "root": {
       "inputs": {
+        "nixlib": "nixlib",
         "nixpkgs": "nixpkgs",
         "opencode-sandbox": "opencode-sandbox",
         "unsloth-src": "unsloth-src"
