@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
+
     unsloth-src.url = "github:unslothai/unsloth";
     unsloth-src.flake = false;
   };
@@ -12,6 +14,7 @@
     self,
     nixpkgs,
     unsloth-src,
+    opencode-sandbox,
     ...
   }: let
     systems = [
@@ -105,6 +108,24 @@
             export CC="${pkgs.gcc}/bin/cc"
             export PATH="$UV_INSTALL_DIR''${PATH:+:$PATH}"
           '';
+        };
+
+        sandbox = opencode-sandbox.packages.${pkgs.system}.sandbox.override {
+          opencode-sandbox = {
+            git.remote.url = "https://github.com/Trantorian1/unsloth-flake.git";
+            git.shutdown.pushOnExit = false;
+            git.withLocalChanges = true;
+
+            forwardPorts = [8888];
+
+            env.extend = with pkgs; [
+              unsloth
+              unsloth-desktop
+
+              nil
+              alejandra
+            ];
+          };
         };
 
         default = unsloth-desktop;
