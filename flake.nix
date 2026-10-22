@@ -22,11 +22,6 @@
     ];
 
     util = nixlib.util {inherit systems inputs;};
-
-    # pyproject.toml reads the version from this attribute too.
-    version = builtins.head (
-      builtins.match ".*__version__ = \"([^\"]+)\".*" (builtins.readFile "${unsloth-src}/unsloth/_version.py")
-    );
   in {
     formatter = util.forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
@@ -37,6 +32,11 @@
         ...
       }: let
         inherit (pkgs) lib;
+
+        # pyproject.toml reads the version from this attribute too.
+        version = builtins.head (
+          builtins.match ".*__version__ = \"([^\"]+)\".*" (builtins.readFile "${unsloth-src}/unsloth/_version.py")
+        );
 
         # Runtime dependencies which unsloth or unsloth studio will not fetch
         # automatically themselves.
