@@ -91,6 +91,13 @@
 
         unsloth = wrapPackage unsloth-unwrapped {
           name = "unsloth";
+
+          # llama.cpp PR #264's MoE expert counting-sort kernel (mmid.cu) hard-crashes
+          # on ROCm for prefill batches >= 512 tokens ("the operation cannot be
+          # performed in the present state"). Force the legacy single-warp sort.
+          profile = ''
+            export GGML_CUDA_MM_IDS_SORT=0
+          '';
         };
 
         unsloth-desktop = wrapPackage unsloth-desktop-unwrapped {
@@ -118,6 +125,10 @@
             export GIO_EXTRA_MODULES="${pkgs.glib-networking}/lib/gio/modules:$GIO_EXTRA_MODULES"
             export CC="${pkgs.gcc}/bin/cc"
             export PATH="$UV_INSTALL_DIR''${PATH:+:$PATH}"
+            # llama.cpp PR #264's MoE expert counting-sort kernel (mmid.cu) hard-crashes
+            # on ROCm for prefill batches >= 512 tokens ("the operation cannot be
+            # performed in the present state"). Force the legacy single-warp sort.
+            export GGML_CUDA_MM_IDS_SORT=0
           '';
         };
 
