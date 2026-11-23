@@ -5,9 +5,9 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixlib.url = "github:nix-util/nixlib";
 
-    opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox";
+    opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox?ref=feat/opencodev2";
 
-    unsloth-src.url = "github:unslothai/unsloth";
+    unsloth-src.url = "github:unslothai/unsloth?ref=11801a62a47daf6c691528bd15ec87dbd2530f2a";
     unsloth-src.flake = false;
   };
 
@@ -141,12 +141,11 @@
             forwardPorts = [8888];
 
             env.extend = with pkgs; [
-              unsloth
-              unsloth-desktop
-
               nil
               alejandra
             ];
+
+            opencode.config.mountHomeConfig = true;
           };
         };
 

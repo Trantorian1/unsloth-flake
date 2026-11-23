@@ -34,6 +34,8 @@ pkgs.python3Packages.buildPythonApplication {
     huggingface-hub
     structlog
     click
+    json5
+    certifi
   ];
 
   # The suites need the studio extra and a GPU, so we don't run it.

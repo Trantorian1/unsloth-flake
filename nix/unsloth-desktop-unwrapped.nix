@@ -26,6 +26,7 @@ pkgs.stdenv.mkDerivation {
     rustc
     pkg-config
     wrapGAppsHook3
+    aws-lc
   ];
 
   buildInputs = with pkgs; [
