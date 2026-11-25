@@ -154,16 +154,16 @@
     "unsloth-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1795447835,
-        "narHash": "sha256-XO1YyzNSaJ3GET/m6ngS4rdvBoM6Cv2xgErLXqEVP+I=",
+        "lastModified": 1795530090,
+        "narHash": "sha256-XJruFvgGIpbgju+Vduoc9Srxm7G+O/ZktPsRe2vah0A=",
         "owner": "unslothai",
         "repo": "unsloth",
-        "rev": "11801a62a47daf6c691528bd15ec87dbd2530f2a",
+        "rev": "fd08b7e1d00b68bb4bafb251d1a809be4ac1ef50",
         "type": "github"
       },
       "original": {
         "owner": "unslothai",
-        "ref": "11801a62a47daf6c691528bd15ec87dbd2530f2a",
+        "ref": "fd08b7e",
         "repo": "unsloth",
         "type": "github"
       }

@@ -1,4 +1,4 @@
-result
+result*
 .env
 nix-store-overlay.img
 .sandbox/

@@ -7,7 +7,7 @@
 
     opencode-sandbox.url = "github:OpencodeSandbox/opencode-sandbox?ref=feat/opencodev2";
 
-    unsloth-src.url = "github:unslothai/unsloth?ref=11801a62a47daf6c691528bd15ec87dbd2530f2a";
+    unsloth-src.url = "github:unslothai/unsloth?ref=fd08b7e";
     unsloth-src.flake = false;
   };
 
